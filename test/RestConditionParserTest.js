@@ -1,5 +1,5 @@
 var should = require('chai').should(),
-    restConditionParser = require("../").Parser.RestCondition;
+    restConditionParser = require("..").Parser.RestCondition;
 
 
 describe('condition parser test', function () {

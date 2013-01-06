@@ -1,5 +1,5 @@
 var expect = require('chai').expect,
-    query = require('../../rAppid.js/js/lib/query.js').query;
+    query = require('..').query;
 
 describe('query', function () {
 
