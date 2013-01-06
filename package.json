@@ -1,0 +1,36 @@
+{
+  "name": "query.js",
+  "version": "0.1.0",
+  "author": "rAppid <support@rappidjs.com> (http://rappidjs.com)",
+  "contributors": [
+    "Tony Findeisen <tony@rappidjs.com>",
+    "Marcus Krejpowicz <marcus@rappidjs.com>"
+  ],
+  "description": "query.js is an abstract query language which can be mapped to different query language implementation.",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "main": "query.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/it-ony/query.js.git"
+  },
+  "keywords": [
+    "query.js",
+    "AQL",
+    "abstract query language"
+  ],
+  "devDependencies": {
+    "chai": "latest",
+    "mocha": "latest",
+    "pegjs": "latest"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.4"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "https://github.com/it-ony/query.js"
+}
