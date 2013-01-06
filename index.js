@@ -7,3 +7,7 @@ module.exports.Query = lib.Query;
 module.exports.Parser = {
     RestCondition: require('./lib/RestConditionParser.js').parser
 };
+
+module.exports.Executor = {
+    ArrayExecutor: require('./lib/ArrayExecutor.js').Executor
+};
