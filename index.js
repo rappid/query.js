@@ -11,3 +11,7 @@ module.exports.Parser = {
 module.exports.Executor = {
     ArrayExecutor: require('./lib/ArrayExecutor.js').Executor
 };
+
+module.exports.Composer = {
+    MongoQueryComposer: require('./lib/composer/MongoQueryComposer.js').MongoQueryComposer
+};

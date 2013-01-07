@@ -4,7 +4,7 @@ var index = require(".."),
     Executor = index.Executor.ArrayExecutor;
 
 
-describe('js.data.Query', function () {
+describe('ArrayExecutor', function () {
 
     var items = [
         {
