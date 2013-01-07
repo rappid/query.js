@@ -111,7 +111,6 @@ describe('query', function () {
                     ]
                 });
 
-            expect(q.sortCacheId()).to.eql("+name;-firstname;+birthday;+xyz;-abc")
         });
 
     });
@@ -187,6 +186,40 @@ describe('query', function () {
                         ]
                     }
                 });
+        });
+
+    });
+
+    describe('sortCacheId', function(){
+        it('should generate sort cache id', function(){
+            var q = query()
+                .sort("name", "-firstname", "+birthday", {
+                    field: "xyz"
+                }, {
+                    field: "abc",
+                    direction: -1
+                });
+
+            expect(q.sortCacheId()).to.eql("+name;-firstname;+birthday;+xyz;-abc");
+        });
+
+    });
+
+    describe('whereCacheId', function(){
+
+        it('should generate unique where cache id', function(){
+            expect(
+                query()
+                    .eql("name", "tony")
+                    .in("b",[1,2,3,4])
+                    .whereCacheId()
+            ).not.to.eql(
+                    query()
+                        .eql("name", "tony")
+                        .in("b", [1, "2", 3, 4])
+                        .whereCacheId()
+                );
+
         });
 
     });
