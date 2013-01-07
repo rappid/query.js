@@ -8,7 +8,7 @@ describe('RestQueryComposer', function () {
 
     describe('#compose', function () {
 
-        it('should serialize statement with where', function () {
+        it('should compose statement with where', function () {
             var q = query()
                 .lt("number", 3)
                 .gt("age", 4)
@@ -21,7 +21,7 @@ describe('RestQueryComposer', function () {
             expect(ret.where).to.equal("number<3 and age>4 and name=what and in(unit,(what,the,hell))");
         });
 
-        it('should serialize .where statement with or', function () {
+        it('should compose .where statement with or', function () {
             var q = query()
                 .or(function () {
                     this
