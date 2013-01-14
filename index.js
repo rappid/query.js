@@ -8,7 +8,7 @@ module.exports.Parser = {
     RestConditionParser: require('./lib/RestConditionParser.js').parser
 };
 
-module.exports.Parser.RestQueryParser = require('./lib/RestQueryParser').RestQueryParser
+module.exports.Parser.RestQueryParser = require('./lib/RestQueryParser').RestQueryParser;
 
 module.exports.Executor = {
     ArrayExecutor: require('./lib/ArrayExecutor.js').Executor
