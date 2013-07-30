@@ -7,9 +7,9 @@ var chai = require('chai'),
 
 describe('RestQueryParser', function () {
 
-    describe('#parse', function(){
+    describe('#parse', function () {
 
-        it('should parse .where statement ', function(){
+        it('should parse .where statement ', function () {
             var q = query()
                 .gt("age", 4);
 
@@ -22,14 +22,14 @@ describe('RestQueryParser', function () {
 
         it('should parse .where statement with or', function () {
             var q = query()
-                .or(function(){
+                .or(function () {
                     this
-                        .lt("number",3)
-                        .eql("name","Tony")
-                },function(){
+                        .lt("number", 3)
+                        .eql("name", "Tony")
+                }, function () {
                     this
-                        .lt("number",5)
-                        .eql("name","Marcus")
+                        .lt("number", 5)
+                        .eql("name", "Marcus")
                 })
                 .gt("age", 4);
 
@@ -38,7 +38,23 @@ describe('RestQueryParser', function () {
             var parsedQuery = RestQueryParser.parse(uriQuery);
 
             expect(parsedQuery).to.eql(q);
-        })
+        });
+
+        it('should parse .where statement with not', function () {
+            var q = query()
+                .not(function () {
+                    this
+                        .lt("number", 3)
+                        .eql("name", "Tony")
+                })
+                .gt("age", 4);
+
+            var uriQuery = RestQueryComposer.compose(q);
+
+            var parsedQuery = RestQueryParser.parse(uriQuery);
+
+            expect(parsedQuery).to.eql(q);
+        });
     });
 
 

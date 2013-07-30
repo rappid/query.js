@@ -21,6 +21,20 @@ describe('RestQueryComposer', function () {
             expect(ret.where).to.equal("number<3 and age>4 and name=what and in(unit,(what,the,hell))");
         });
 
+        it('should compose statement with not statement', function(){
+            var q = query()
+                .not(function(){
+                    this.gt("age", 4)
+                        .eql("name", "what")
+                        .in("unit", ["what", "the", "hell"]);
+                });
+
+            var ret = RestComposer.compose(q);
+
+            expect(ret.where).to.exist;
+            expect(ret.where).to.equal("not(age>4 and name=what and in(unit,(what,the,hell)))");
+        });
+
         it('should compose .where statement with or', function () {
             var q = query()
                 .or(function () {
