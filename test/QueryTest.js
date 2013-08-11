@@ -22,13 +22,13 @@ describe('query', function () {
                 .sort("name");
 
             expect(q.toObject()).to.eql({
-                    sort: [
-                        {
-                            field: "name",
-                            direction: 1
-                        }
-                    ]
-                });
+                sort: [
+                    {
+                        field: "name",
+                        direction: 1
+                    }
+                ]
+            });
 
             expect(q.sortCacheId()).to.eql("+name");
         });
@@ -54,12 +54,15 @@ describe('query', function () {
 
         it('array', function () {
             var q = query()
-                .sort([{
-                    field: "xyz"
-                }, {
-                    field: "abc",
-                    direction: -1
-                }]);
+                .sort([
+                    {
+                        field: "xyz"
+                    },
+                    {
+                        field: "abc",
+                        direction: -1
+                    }
+                ]);
 
             expect(
                 q.toObject()
@@ -95,16 +98,20 @@ describe('query', function () {
                         {
                             field: "name",
                             direction: 1
-                        }, {
+                        },
+                        {
                             field: "firstname",
                             direction: -1
-                        }, {
+                        },
+                        {
                             field: "birthday",
                             direction: 1
-                        }, {
+                        },
+                        {
                             field: "xyz",
                             direction: 1
-                        }, {
+                        },
+                        {
                             field: "abc",
                             direction: -1
                         }
@@ -190,8 +197,8 @@ describe('query', function () {
 
     });
 
-    describe('sortCacheId', function(){
-        it('should generate sort cache id', function(){
+    describe('sortCacheId', function () {
+        it('should generate sort cache id', function () {
             var q = query()
                 .sort("name", "-firstname", "+birthday", {
                     field: "xyz"
@@ -205,13 +212,13 @@ describe('query', function () {
 
     });
 
-    describe('whereCacheId', function(){
+    describe('whereCacheId', function () {
 
-        it('should generate unique where cache id', function(){
+        it('should generate unique where cache id', function () {
             expect(
                 query()
                     .eql("name", "tony")
-                    .in("b",[1,2,3,4])
+                    .in("b", [1, 2, 3, 4])
                     .whereCacheId()
             ).not.to.eql(
                     query()
@@ -220,6 +227,49 @@ describe('query', function () {
                         .whereCacheId()
                 );
 
+        });
+
+    });
+
+    describe('findExpression', function () {
+
+        it('should return an expression', function () {
+            var expression = query()
+                .eql("name", "tony")
+                .in("b", [1, 2, 3, 4])
+                .findExpression("in", "b");
+
+            expect(expression).to.exist;
+            expect(expression.field).to.equal("b");
+            expect(expression.operator).to.equal("in");
+        });
+
+        it('should find expression in a nested statement', function () {
+            var expression = query()
+                .or(function () {
+                    this.in("b", [1, 2, 3, 4]);
+                },
+                function () {
+                    this.eql("name", "tony");
+                })
+                .findExpression("in", "b");
+
+            expect(expression).to.exist;
+            expect(expression.field).to.equal("b");
+            expect(expression.operator).to.equal("in");
+        });
+
+        it('should return null if no expression could be found', function () {
+            var expression = query()
+                .or(function () {
+                    this.in("b", [1, 2, 3, 4]);
+                },
+                function () {
+                    this.eql("name", "tony");
+                })
+                .findExpression("in", "c");
+
+            expect(expression).to.not.exist;
         });
 
     });
