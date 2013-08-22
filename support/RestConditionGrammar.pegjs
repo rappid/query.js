@@ -19,4 +19,4 @@ not = "not" g:group { return { name: "not", args: [g] }; }
 nchar = unreserved / "*" / "+"
 pctEncoded   = "%" HEXDIG HEXDIG
 HEXDIG = [a-fA-F0-9]
-unreserved    = [a-zA-Z] / [0-9] / "-" / "." / "_" / "~"
+unreserved    = [^+{}()<>=, ]

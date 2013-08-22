@@ -5,11 +5,11 @@ var should = require('chai').should(),
 describe('condition parser test', function () {
 
 
-    describe("#and", function(){
+    describe("#and", function () {
         var rule = "and";
 
-        it("should parse age<4", function(){
-            var hash = restConditionParser.parse("age<4",rule);
+        it("should parse age<4", function () {
+            var hash = restConditionParser.parse("age<4", rule);
 
             hash.name.should.equal("and");
             hash.args.length.should.equal(1);
@@ -18,10 +18,35 @@ describe('condition parser test', function () {
 
     });
 
-    describe("#comparison", function(){
+    describe('#name', function () {
+        var rule = "name";
+
+        it('should parse name with alpha numeric values', function () {
+            restConditionParser.parse("ag4123", rule).should.exist;
+        });
+
+        it('should parse name with umlauten', function () {
+            restConditionParser.parse("äöüá231", rule).should.exist;
+        });
+
+        it('should parse name with _ - ', function () {
+            restConditionParser.parse("-asd-asd_asd", rule).should.exist;
+        });
+
+        it('should not parse name with < > = " "', function (done) {
+            try {
+                restConditionParser.parse('a<=> b', rule);
+                done("Should not parse");
+            } catch (e) {
+                done();
+            }
+        });
+    });
+
+    describe("#comparison", function () {
         var rule = "comparison";
 
-        it('should parse "="', function(){
+        it('should parse "="', function () {
             var hash = restConditionParser.parse("a=b", rule);
 
             hash.name.should.equal("eql");
@@ -62,20 +87,20 @@ describe('condition parser test', function () {
     describe("#parse operator", function () {
         var rule = "operator";
 
-        it('should parse one operator', function(){
-            var hash = restConditionParser.parse("eq(field,value)",rule);
+        it('should parse one operator', function () {
+            var hash = restConditionParser.parse("eq(field,value)", rule);
             hash.name.should.equal('eq');
             hash.args.length.should.equal(2);
         });
 
-        it('should parse a comparison', function(){
-            var hash = restConditionParser.parse("name=tom",rule);
+        it('should parse a comparison', function () {
+            var hash = restConditionParser.parse("name=tom", rule);
 
             hash.name.should.equal('eql');
             hash.args.length.should.equal(2);
         });
 
-        it('should parse a "or" group', function(){
+        it('should parse a "or" group', function () {
             var hash = restConditionParser.parse("(eq(name,tom) or eq(age,22) or lt(age,23))", rule);
 
             hash.name.should.equal("or");
@@ -90,7 +115,7 @@ describe('condition parser test', function () {
         });
 
         it('should parse a "and" group with comparison', function () {
-            var hash = restConditionParser.parse("(name=tom and age=22)",rule);
+            var hash = restConditionParser.parse("(name=tom and age=22)", rule);
 
             hash.name.should.equal("and");
             hash.args.length.should.equal(2);
