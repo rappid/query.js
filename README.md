@@ -3,7 +3,7 @@
 # query.js
 ## Introduction
 
-query.js is an abstract query language which can be mapped to different query language implementation. 
+query.js is an abstract query language which can be mapped to different query language implementations. 
 It runs in the browser as well as on Node.js.
 
 ## Installation
